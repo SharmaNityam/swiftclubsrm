@@ -1,26 +1,223 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Theme is an explicit choice on <html data-theme>, not a media query, so the
+   toggle can override the OS. The init script in layout.tsx seeds it from
+   localStorage (or the OS) before first paint. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  /* ── Palette ─────────────────────────────────────────────
+     Sampled from the mockup. Single source of truth: correcting
+     a hue here updates every utility that references it.        */
+  --color-cream: #fffcfa; /* page ground                        */
+  --color-surface: #ffffff; /* cards, inputs, raised panels       */
+  --color-glyph: #c4c4c4; /* placeholder silhouettes            */
+  --color-ink: #0b0b0c; /* headings, logotype                 */
+  --color-body: #5b5b60; /* paragraph text                     */
+  --color-muted: #9a9aa0; /* eyebrows, nav links, tracked labels */
+  --color-flame: #f94e1e; /* primary orange                     */
+  --color-ember: #ff7a45; /* gradient partner                   */
+  --color-peach: #ffe3d6; /* icon badges, translucent cards     */
+  --color-blush: #fff1ea; /* faintest wash                      */
+  --color-hairline: #efe7e3; /* card borders, dividers             */
+  --color-tile: #ececec; /* avatar placeholder tiles           */
+
+  /* ── Motion ───────────────────────────────────────────── */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* next/font injects these at runtime, so they must stay as var() refs */
+  --font-display: var(--font-archivo-black);
+  --font-sans: var(--font-inter);
+  --font-hand: var(--font-caveat);
+  --font-mono: var(--font-jetbrains);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  color-scheme: light;
+}
+
+/**
+ * Dark palette.
+ *
+ * Not an inversion — a warm near-black ground keeps the brand's orange feeling
+ * at home, where a neutral grey would make it read as a warning colour. Flame
+ * is nudged brighter (#f9541f -> #ff5a2e) because the light-mode orange only
+ * reaches 3.4:1 on this ground; the brighter one clears 5.9:1.
+ *
+ * Scoped as `:root[data-theme]` (0,2,0) so it outranks the `:root` (0,1,0)
+ * block Tailwind emits its theme tokens into, regardless of source order.
+ */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-cream: #121011; /* page ground      */
+  --color-surface: #1b1718; /* cards, inputs    */
+  --color-ink: #f6f3f1; /* headings         */
+  --color-body: #aba5a2; /* paragraphs  7.9:1 */
+  --color-muted: #8a8482; /* micro-labels 5.2:1 */
+  --color-flame: #ff5a2e; /* accent      5.9:1 */
+  --color-ember: #ff8a5c;
+  --color-peach: #34211b; /* icon badges      */
+  --color-blush: #1f1715;
+  --color-hairline: #2b2524;
+  --color-tile: #262121;
+  --color-glyph: #3a3433;
+}
+
+/**
+ * Apple-inspired Swift mode.
+ *
+ * The page's hero uses the same two-stop gradient as Apple's current Swift
+ * What's New page: #3c435e at -50% into #000 at 100%. Everything outside the
+ * hero sits on a true black ground, while the existing layout and components
+ * remain exactly the same.
+ */
+:root[data-theme="apple"] {
+  color-scheme: dark;
+
+  --color-cream: #000000;
+  --color-surface: #161616;
+  --color-ink: #f5f5f7;
+  --color-body: #f5f5f7;
+  --color-muted: #a1a1a6;
+  --color-flame: #ff5a2e;
+  --color-ember: #ff8a5c;
+  --color-peach: #1d1d1f;
+  --color-blush: #161617;
+  --color-hairline: #424245;
+  --color-tile: #1d1d1f;
+  --color-glyph: #6e6e73;
+}
+
+@layer base {
+  /* Scrolling is eased in JS (src/lib/scroll.ts). CSS smooth-scroll would
+     hijack window.scrollTo() and fight that rAF loop, so it stays off. */
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-body);
+    /* Only the ground shifts on toggle; content must not appear to reflow. */
+    transition:
+      background-color 0.3s var(--ease-out-expo),
+      color 0.3s var(--ease-out-expo);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    /* Guard against decorative shapes that bleed past the viewport edge */
+    overflow-x: clip;
+  }
+
+  /* Exact background treatment from developer.apple.com/swift/whats-new/. */
+  :root[data-theme="apple"] #top {
+    /* Let the gradient begin at the viewport's website edge, underneath the
+       glass header, while preserving the hero content's current position. */
+    margin-top: -88px;
+    padding-top: calc(3rem + 88px);
+    background-image: linear-gradient(#3c435e -50%, #000000 100%);
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: 100% clamp(330px, 28.75vw, 368px);
+  }
+
+  @media (min-width: 768px) {
+    :root[data-theme="apple"] #top {
+      padding-top: calc(10rem + 88px);
+    }
+  }
+
+  /* Keep the existing header layout, but give Apple mode its translucent,
+     blurred glass surface instead of a flat black strip. */
+  :root[data-theme="apple"] header {
+    background: rgba(29, 29, 31, 0.68) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+  }
+
+  /* Warm washes belong to the original mode, not this reference background. */
+  :root[data-theme="apple"] .theme-decorative-background {
+    opacity: 0 !important;
+  }
+
+  :root[data-theme="apple"] #mobile-nav {
+    background: rgba(29, 29, 31, 0.82) !important;
+  }
+
+  .theme-icon-sun,
+  .theme-icon-apple {
+    display: none;
+  }
+
+  :root[data-theme="dark"] .theme-icon-moon {
+    display: none;
+  }
+
+  :root[data-theme="dark"] .theme-icon-sun {
+    display: block;
+  }
+
+  :root[data-theme="apple"] .theme-icon-moon,
+  :root[data-theme="apple"] .theme-icon-sun {
+    display: none;
+  }
+
+  :root[data-theme="apple"] .theme-icon-apple {
+    display: block;
+  }
+
+  /* Sticky nav is 72px tall; keep anchor targets clear of it */
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  /* One consistent, visible focus ring across the whole page */
+  :focus-visible {
+    outline: 2px solid var(--color-flame);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* Scroll-reveals must never strand content hidden. Server-rendered markup
+       carries motion's `opacity:0` initial style, and React reuses that DOM node
+       when the client swaps to the non-animated branch, so the inline style can
+       survive. Override it here, where JS cannot lose the race. */
+    [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility display-tight {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+  color: var(--color-ink);
+}
+
+/* Wide-tracked uppercase micro-label used for eyebrows and rules */
+@utility tracked-label {
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-muted);
 }
