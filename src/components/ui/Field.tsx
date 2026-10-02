@@ -19,7 +19,7 @@ type FieldProps = {
  *
  * Taking the input as a render prop means the ARIA plumbing (`aria-invalid`,
  * `aria-describedby` pointing at whichever of hint/error exists) is computed in
- * one place instead of being hand-repeated — and hand-repeated is where it
+ * one place instead of being hand-repeated - and hand-repeated is where it
  * silently drifts out of sync.
  */
 export function Field({

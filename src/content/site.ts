@@ -1,6 +1,6 @@
 /**
  * Single source of truth for every string, list and roster on the page.
- * Section components are pure renderers over this data — copy edits and new
+ * Section components are pure renderers over this data - copy edits and new
  * team members never require touching JSX.
  */
 
@@ -14,7 +14,7 @@ export type Domain = {
 };
 
 export type Member = {
-  /** Left undefined until real people are added — tile renders a placeholder. */
+  /** Left undefined until real people are added - tile renders a placeholder. */
   name?: string;
   role?: string;
   /** Path under /public, e.g. "/images/team/asha.jpg" */
@@ -131,7 +131,7 @@ export const site = {
     index: "05",
     title: "Recruitments",
     heading: "Applications are open.",
-    body: "No prior experience required — just curiosity and the willingness to build something with other people.",
+    body: "No prior experience required just curiosity and the willingness to build something with other people.",
     cta: "Join the Club",
   },
 
@@ -139,7 +139,12 @@ export const site = {
     eyebrow: "Recruitments 2026",
     title: "Join the Club",
     intro:
-      "Tell us a little about yourself. No prior experience required \u2014 we care more about curiosity than credentials.",
+      "Tell us a little about yourself. No prior experience required - we care more about curiosity than credentials.",
+    /** The form is commented out on /register while applications are closed. */
+    openingSoon: {
+      title: "Opening soon",
+      body: "We aren't taking applications yet. The form will go live right here the moment recruitments open - check back soon, or watch our socials for the date.",
+    },
     years: ["1st year", "2nd year", "3rd year", "4th year"],
     success: {
       title: "You're on the list.",

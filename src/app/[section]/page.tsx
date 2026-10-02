@@ -6,7 +6,7 @@ import { ScrollToSectionOnMount } from "@/components/layout/ScrollToSectionOnMou
 
 const SECTIONS = site.nav.map((n) => n.href.slice(1));
 
-/** Prerender one static page per section — no redirects, no client-only routing. */
+/** Prerender one static page per section - no redirects, no client-only routing. */
 export function generateStaticParams() {
   return SECTIONS.map((section) => ({ section }));
 }

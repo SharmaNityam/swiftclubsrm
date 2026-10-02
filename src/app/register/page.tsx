@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
+import { Clock } from "lucide-react";
 import { site } from "@/content/site";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Reveal } from "@/components/ui/Reveal";
-import { RegisterForm } from "@/components/sections/RegisterForm";
+// import { RegisterForm } from "@/components/sections/RegisterForm";
 import { Blob } from "@/components/decor/Blob";
 
 export const metadata: Metadata = {
   title: "Register",
   description:
-    "Apply to join the Swift Coding Club. No prior experience required — just curiosity and the willingness to build something with other people.",
+    "Apply to join the Swift Coding Club. No prior experience required just curiosity and the willingness to build something with other people.",
   alternates: { canonical: "/register" },
 };
 
 export default function RegisterPage() {
-  const { eyebrow, title, intro } = site.register;
+  const { eyebrow, title, intro, openingSoon } = site.register;
 
   return (
     <>
@@ -43,8 +44,25 @@ export default function RegisterPage() {
           </Reveal>
 
           <Reveal delay={0.1} className="mt-12">
+            <div className="rounded-[14px] border border-hairline bg-surface p-10 text-center shadow-[0_1px_2px_rgba(11,11,12,0.04)] md:p-14">
+              <h2 className="display-tight mt-7 text-[clamp(1.75rem,3.2vw,2.25rem)]">
+                {openingSoon.title}
+              </h2>
+              <span
+                className="mx-auto mt-5 block h-[3px] w-14 rounded-full bg-flame"
+                aria-hidden
+              />
+              <p className="mx-auto mt-6 max-w-[32rem] text-[1.0625rem] leading-[1.8] text-body">
+                {openingSoon.body}
+              </p>
+            </div>
+          </Reveal>
+
+          {/* Applications are closed - the form stays commented out until they reopen.
+          <Reveal delay={0.1} className="mt-12">
             <RegisterForm />
           </Reveal>
+          */}
         </div>
       </main>
 

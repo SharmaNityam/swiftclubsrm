@@ -11,7 +11,7 @@
 /** Height of the sticky header; targets are offset so they clear it. */
 export const NAV_OFFSET = 88;
 
-/** easeInOutQuart — slow departure, long glide, soft arrival. */
+/** easeInOutQuart - slow departure, long glide, soft arrival. */
 const ease = (t: number) =>
   t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
 
@@ -55,7 +55,7 @@ export function smoothScrollToY(targetY: number, onDone?: () => void) {
   const duration = Math.min(1100, Math.max(480, 320 + Math.abs(delta) * 0.32));
   const start = performance.now();
 
-  // Any real input from the user wins immediately — never trap their scroll.
+  // Any real input from the user wins immediately - never trap their scroll.
   const abort = () => cancelSmoothScroll();
   const onKey = (e: KeyboardEvent) => {
     if (

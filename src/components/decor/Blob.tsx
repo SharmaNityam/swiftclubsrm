@@ -27,7 +27,7 @@ export function Blob({
 
 /**
  * The rotated rounded-square motif that bleeds off the left edge of the About
- * section and sits behind the hero card — a flattened echo of the logo tile.
+ * section and sits behind the hero card - a flattened echo of the logo tile.
  */
 export function TileShape({
   className,

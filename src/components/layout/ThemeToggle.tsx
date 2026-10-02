@@ -14,7 +14,7 @@ type Theme = "light" | "dark" | "apple";
  * is already on `<html data-theme>` before hydration (see the init script in
  * layout.tsx). Mirroring it into state would either mismatch during hydration
  * or force a "mounted" guard that flashes the wrong icon. Instead all three icons
- * render every time and CSS picks one via the `dark:` variant — so the markup
+ * render every time and CSS picks one via the `dark:` variant - so the markup
  * is identical on server and client, and the button is correct on first paint.
  *
  * Holding no state is also why there is no `setState` here: the only effect
@@ -56,7 +56,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         className,
       )}
     >
-      {/* CSS, not state, decides which icon shows — no hydration mismatch. */}
+      {/* CSS, not state, decides which icon shows - no hydration mismatch. */}
       <Moon className="theme-icon-moon size-[1.15rem]" aria-hidden />
       <Sun className="theme-icon-sun size-[1.15rem]" aria-hidden />
       <Contrast className="theme-icon-apple size-[1.15rem]" aria-hidden />

@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Archivo_Black, Caveat, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-/* Archivo Black ships a single weight — it must be declared explicitly. */
+/* Archivo Black ships a single weight - it must be declared explicitly. */
 const archivoBlack = Archivo_Black({
   variable: "--font-archivo-black",
   subsets: ["latin"],
@@ -31,7 +31,7 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://swift-club.vercel.app"),
   title: {
-    default: "Swift Coding Club — Build. Learn. Belong.",
+    default: "Swift Coding Club - Build. Learn. Belong.",
     template: "%s · Swift Coding Club",
   },
   description:
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     "DSA",
   ],
   openGraph: {
-    title: "Swift Coding Club — Build. Learn. Belong.",
+    title: "Swift Coding Club - Build. Learn. Belong.",
     description:
       "Where ideas meet logic, and learners build the future. Join a student-run community of builders.",
     type: "website",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Swift Coding Club — Build. Learn. Belong.",
+    title: "Swift Coding Club - Build. Learn. Belong.",
     description: "Where ideas meet logic, and learners build the future.",
   },
 };
@@ -65,7 +65,7 @@ export const viewport: Viewport = {
 
 /**
  * Runs before the browser paints any of <body>, so the correct theme is on
- * <html> from the very first frame — no flash of the wrong palette. It has to
+ * <html> from the very first frame - no flash of the wrong palette. It has to
  * be a blocking inline script for that reason; anything deferred, including a
  * React effect, necessarily runs after paint. Wrapped in try/catch because
  * localStorage throws outright in some privacy modes.

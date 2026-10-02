@@ -34,7 +34,7 @@ const EMPTY: Values = {
   consent: false,
 };
 
-/** Deliberately permissive — real addresses break strict patterns constantly. */
+/** Deliberately permissive - real addresses break strict patterns constantly. */
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 function validate(fd: FormData): Errors {
@@ -53,7 +53,7 @@ function validate(fd: FormData): Errors {
 
   const why = get("why");
   if (why.length < 20)
-    e.why = `Tell us a little more — at least 20 characters (${why.length} so far).`;
+    e.why = `Tell us a little more - at least 20 characters (${why.length} so far).`;
 
   if (!fd.get("consent")) e.consent = "Please confirm before submitting.";
   return e;
@@ -65,7 +65,7 @@ export function RegisterForm() {
 
   /**
    * Controlled, not `defaultValue`. A failed submit re-renders this form, and
-   * `defaultValue` only applies on mount — on re-render React left the DOM
+   * `defaultValue` only applies on mount - on re-render React left the DOM
    * untouched and `<select>` silently dropped its selection, so fixing one
    * field would quietly clear another. State is the single source of truth.
    */
@@ -76,7 +76,7 @@ export function RegisterForm() {
       const errors = validate(fd);
       if (Object.keys(errors).length) return { status: "error", errors };
 
-      // Mock submission — stands in for the real endpoint.
+      // Mock submission - stands in for the real endpoint.
       await new Promise((r) => setTimeout(r, 1200));
       return { status: "success", errors: {} };
     },

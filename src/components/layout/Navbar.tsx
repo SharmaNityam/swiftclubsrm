@@ -34,7 +34,7 @@ export function Navbar() {
   /**
    * Section links are real hrefs (/about, /domains, ...) so they work without
    * JS and can be opened in a new tab. When the target section is on this page
-   * we intercept, ease to it, and push the same clean URL — no reload, no hash.
+   * we intercept, ease to it, and push the same clean URL - no reload, no hash.
    */
   const onHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
@@ -51,7 +51,7 @@ export function Navbar() {
   ) => {
     // Let the browser handle modified clicks (new tab, download, etc.)
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-    if (!scrollToSection(href.slice(1))) return; // not on this page — navigate
+    if (!scrollToSection(href.slice(1))) return; // not on this page - navigate
     e.preventDefault();
     window.history.pushState(null, "", href);
     setOpen(false);

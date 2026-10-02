@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Hand-drawn marker strokes. All stroke-only and `currentColor`-driven so the
- * colour comes from the parent's text colour, and all `aria-hidden` — they are
+ * colour comes from the parent's text colour, and all `aria-hidden` - they are
  * ornament, never information.
  */
 
